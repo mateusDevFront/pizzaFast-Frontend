@@ -23,11 +23,19 @@ export default function Home() {
   async function handleLogin(event:FormEvent){
     event.preventDefault()
 
+    if(email === '' || password === ''){
+      alert('Preenche seus dados')
+      return;
+    }
+    setLoading(true)
+
     let data = {
-      email: 'test@teste.com',
-      password: '123456'
+      email,
+      password
     }
     await signIn(data)
+    
+    setLoading(false);
   }
   return (
     <>
@@ -47,19 +55,19 @@ export default function Home() {
             placeholder="Email"
             type="text"
             value={email}
-            onChange={(text) => setEmail(text.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             />
 
             <Input
             placeholder="Senha"
             type="password"
             value={password}
-            onChange={(text) => setPassword(text.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             />
 
             <Button
             type="submit"
-            loading={false}>
+            loading={loading}>
               Acessar
             </Button>
 
